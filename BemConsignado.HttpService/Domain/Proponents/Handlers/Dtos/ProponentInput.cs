@@ -10,5 +10,20 @@
         public string Email { get; private set; }
         public bool IsActive { get; private set; }
         public DateTime BirthDate { get; private set; }
+
+        public CreateProponentCommand CreateCommand()
+        {
+            return new CreateProponentCommand
+            {
+                Cpf = Cpf,
+                Income = Income,
+                Address = Address,
+                State = State,
+                PhoneNumber = PhoneNumber,
+                Email = Email,
+                IsActive = IsActive,
+                BirthDate = BirthDate
+            };
+        }
     }
 }

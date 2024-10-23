@@ -1,17 +1,16 @@
-﻿using BemConsignado.HttpService.Domain.Proponents.Handlers.Dtos;
-using MediatR;
+﻿using MediatR;
 
 namespace BemConsignado.HttpService.Domain.Proponents.Handlers
 {
-    public class CreateProponentCommand(ProponentInput proponent) : IRequest
+    public class CreateProponentCommand : IRequest
     {
-        public string Cpf { get; private set; } = proponent.Cpf;
-        public decimal Income { get; private set; } = proponent.Income;
-        public string Address { get; private set; } = proponent.Address;
-        public string State { get; private set; } = proponent.State;
-        public string PhoneNumber { get; private set; } = proponent.PhoneNumber;
-        public string Email { get; private set; } = proponent.Email;
-        public bool IsActive { get; private set; } = proponent.IsActive;
-        public DateTime BirthDate { get; private set; } = proponent.BirthDate;
+        public required string Cpf { get; set; }
+        public decimal Income { get; set; }
+        public string Address { get; set; }
+        public string State { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime BirthDate { get; set; }
     }
 }

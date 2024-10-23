@@ -1,5 +1,4 @@
 using BemConsignado.HttpService.Domain.Proponents.Handlers.Dtos;
-using BemConsignado.HttpService.Domain.Proponents.Handlers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +9,9 @@ namespace BemConsignado.HttpService.Controllers
     public class ProponentsController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
-        public async Task Create(ProponentInput proponent)
+        public async Task Create(ProponentInput proponentInput)
         {
-            var proponentCommand = new CreateProponentCommand(proponent);
-            await mediator.Send(proponentCommand);
+            await mediator.Send(proponentInput.CreateCommand());
         }
     }
 }
