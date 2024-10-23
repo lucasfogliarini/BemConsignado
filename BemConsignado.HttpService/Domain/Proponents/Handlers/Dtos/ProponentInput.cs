@@ -7,6 +7,8 @@ namespace BemConsignado.HttpService.Domain.Proponents.Handlers.Dtos
         [Required]
         public required string Cpf { get; set; }
         [Required]
+        public required string Name { get; set; }
+        [Required]
         public required decimal Income { get; set; }
         [Required]
         public required string Address { get; set; }
@@ -25,6 +27,7 @@ namespace BemConsignado.HttpService.Domain.Proponents.Handlers.Dtos
             return new CreateProponentCommand
             {
                 Cpf = Cpf,
+                Name = Name,
                 Income = Income,
                 Address = Address,
                 State = State,

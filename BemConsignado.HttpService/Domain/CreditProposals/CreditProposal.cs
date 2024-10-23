@@ -8,6 +8,7 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
         public int Id { get; set; }
         public CreditProposalStatus Status { get; private set; }
         public Proponent Proponent { get; private set; }
+        public CreditPartner CreditPartner { get; private set; }
         public int Installments { get; private set; }
         public decimal Credit { get; private set; }
 

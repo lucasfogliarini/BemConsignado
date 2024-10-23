@@ -11,8 +11,11 @@ public class ProponentEntityConfiguration : IEntityTypeConfiguration<Proponent>
         builder.HasKey(o => o.Id);
 
         builder.Property(e => e.Cpf).IsRequired();
+        builder.Property(e => e.Name).IsRequired();
+        builder.Property(e => e.State).IsRequired();
         builder.Property(e => e.Email).IsRequired();
         builder.Property(e => e.Address).IsRequired();
+        builder.Property(e => e.PhoneNumber).IsRequired();
         builder.Property(e => e.Income).IsRequired();
 
         builder
