@@ -1,0 +1,6 @@
+@BemConsignado.HttpService_HostAddress = http://localhost:5192
+
+GET {{BemConsignado.HttpService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
