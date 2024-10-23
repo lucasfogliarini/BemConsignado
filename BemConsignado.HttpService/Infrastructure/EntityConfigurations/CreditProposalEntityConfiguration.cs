@@ -18,8 +18,8 @@ public class CreditProposalEntityConfiguration : IEntityTypeConfiguration<Credit
             .IsRequired();
 
         builder
-            .HasOne(p => p.CreditPartner)
-            .WithMany(b => b.Proposals)
+            .HasOne(p => p.Agreement)
+            .WithMany()
             .IsRequired();
     }
 }

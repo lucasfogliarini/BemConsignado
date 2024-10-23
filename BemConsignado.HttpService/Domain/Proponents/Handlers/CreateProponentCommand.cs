@@ -2,7 +2,7 @@
 
 namespace BemConsignado.HttpService.Domain.Proponents.Handlers
 {
-    public class CreateProponentCommand : IRequest
+    public class CreateProponentCommand : IRequest<Proponent>
     {
         public required string Cpf { get; set; }
         public required string Name { get; set; }

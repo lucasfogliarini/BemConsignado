@@ -1,4 +1,5 @@
-﻿using BemConsignado.HttpService.Domain.Proponents;
+﻿using BemConsignado.HttpService.Domain.CreditAgreements;
+using BemConsignado.HttpService.Domain.Proponents;
 using CSharpFunctionalExtensions;
 
 namespace BemConsignado.HttpService.Domain.CreditProposals
@@ -8,11 +9,11 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
         public int Id { get; set; }
         public CreditProposalStatus Status { get; private set; }
         public Proponent Proponent { get; private set; }
-        public CreditPartner CreditPartner { get; private set; }
+        public CreditAgreement Agreement { get; private set; }
         public int Installments { get; private set; }
         public decimal Credit { get; private set; }
 
-        public static Result<CreditProposal> Create(Proponent proponent, decimal credit, int installments)
+        public static Result<CreditProposal> Create(Proponent proponent, CreditAgreement creditAgreement, decimal credit, int installments)
         {
             var hasOpenProposal = proponent.Proposals.Any(p => p.Status == CreditProposalStatus.Open);
             if (hasOpenProposal)
@@ -25,10 +26,11 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
             DateTime maxPaymentDate = proponent.BirthDate.AddYears(maxPaymentYear);
             DateTime lastInstallmentDate = DateTime.Now.AddMonths(installments);
             if (lastInstallmentDate > maxPaymentDate)
-                return Result.Failure<CreditProposal>("A Última parcela de pagamento não pode exceder a idade de 80 anos do proponente.");
+                return Result.Failure<CreditProposal>("A última parcela de pagamento não pode exceder a idade de 80 anos do proponente.");
 
             return new CreditProposal
             {
+                Agreement = creditAgreement,
                 Status = CreditProposalStatus.Open,
                 Proponent = proponent,
                 Installments = installments,

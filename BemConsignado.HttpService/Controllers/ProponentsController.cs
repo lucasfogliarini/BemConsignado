@@ -9,9 +9,10 @@ namespace BemConsignado.HttpService.Controllers
     public class ProponentsController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
-        public async Task Create(ProponentInput proponentInput)
+        public async Task<IActionResult> Create(ProponentInput proponentInput)
         {
-            await mediator.Send(proponentInput.CreateCommand());
+            var proponent = await mediator.Send(proponentInput.CreateCommand());
+            return Created("", proponent);
         }
     }
 }

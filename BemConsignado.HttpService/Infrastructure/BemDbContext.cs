@@ -1,4 +1,5 @@
-﻿using BemConsignado.HttpService.Domain.CreditProposals;
+﻿using BemConsignado.HttpService.Domain.CreditAgreements;
+using BemConsignado.HttpService.Domain.CreditProposals;
 using BemConsignado.HttpService.Domain.Proponents;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -9,6 +10,7 @@ public class BemDbContext(DbContextOptions options) : DbContext(options), IUnitO
 {
     public DbSet<Proponent> Proponents { get; set; }
     public DbSet<CreditProposal> CreditProposals { get; set; }
+    public DbSet<CreditAgreement> CreditAgreements { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
