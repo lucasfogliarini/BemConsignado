@@ -6,7 +6,7 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
 {
     public class CreateCreditProposalHandler(ProponentRepository proponentRepository, CreditProposalRepository creditProposalRepository) : IRequestHandler<CreateCreditProposalCommand, Result<CreditProposal>>
     {
-        public async Task<Result<CreditProposal>> Handle(CreateCreditProposalCommand request)
+        public async Task<Result<CreditProposal>> Handle(CreateCreditProposalCommand request, CancellationToken cancellationToken)
         {
             var proponent = await proponentRepository.GetAsync(request.Cpf);
             if(proponent == null)
