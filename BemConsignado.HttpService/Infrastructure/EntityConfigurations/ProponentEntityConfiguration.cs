@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using BemConsignado.HttpService.Domain.Entities;
+using BemConsignado.HttpService.Domain.Proponent.Proponent;
+using BemConsignado.HttpService.Domain.Proponent;
 
 namespace BemConsignado.HttpService.Infrastructure.EntityConfigurations;
 

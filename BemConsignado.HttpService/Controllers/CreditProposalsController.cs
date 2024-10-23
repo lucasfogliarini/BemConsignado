@@ -5,7 +5,7 @@ namespace BemConsignado.HttpService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProposalsController(IMediator mediator) : ControllerBase
+    public class CreditProposalsController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
         public async Task Create()
