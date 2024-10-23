@@ -22,7 +22,8 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
             if (creditAgreement == null)
                 return Result.Failure<CreditProposal>($"Não há convênios disponíveis que tenha esse limite de crédito '{request.Credit}' no estado '{proponent.State}'.");
 
-            var creditProposal = CreditProposal.Create(proponent, creditAgreement, request.Credit, request.Installments);
+            var validations = creditProposalRepository.GetValidations();
+            var creditProposal = CreditProposal.Create(proponent, creditAgreement, request.Credit, request.Installments, validations);
             if (creditProposal.IsFailure)
                 return creditProposal;
 

@@ -1,4 +1,5 @@
 ﻿using BemConsignado.HttpService.Domain.CreditAgreements;
+using BemConsignado.HttpService.Domain.CreditProposals.Validations;
 using BemConsignado.HttpService.Domain.Proponents;
 using CSharpFunctionalExtensions;
 
@@ -13,20 +14,14 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
         public int Installments { get; private set; }
         public decimal Credit { get; private set; }
 
-        public static Result<CreditProposal> Create(Proponent proponent, CreditAgreement creditAgreement, decimal credit, int installments)
+        public static Result<CreditProposal> Create(Proponent proponent, CreditAgreement creditAgreement, decimal credit, int installments, IValidation[] validations)
         {
-            var hasOpenProposal = proponent.Proposals.Any(p => p.Status == CreditProposalStatus.Open);
-            if (hasOpenProposal)
-                return Result.Failure<CreditProposal>("Proponente já contém uma proposta de crédito consignado aberta.");
-
-            if (!proponent.IsActive)
-                return Result.Failure<CreditProposal>("Proponente deve estar ativo.");
-
-            int maxPaymentYear = 80;
-            DateTime maxPaymentDate = proponent.BirthDate.AddYears(maxPaymentYear);
-            DateTime lastInstallmentDate = DateTime.Now.AddMonths(installments);
-            if (lastInstallmentDate > maxPaymentDate)
-                return Result.Failure<CreditProposal>("A última parcela de pagamento não pode exceder a idade de 80 anos do proponente.");
+            foreach (var validation in validations)
+            {
+                var result = validation.Validate(proponent, installments);
+                if (result.IsFailure)
+                    return Result.Failure<CreditProposal>(result.Error);
+            }
 
             return new CreditProposal
             {
