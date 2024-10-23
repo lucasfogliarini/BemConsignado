@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BemConsignado.HttpService.Domain.CreditAgreements
 {
-    public class CreditAgreementRepository(BemDbContext bemDbContext)
+    public class CreditAgreementRepository(BemDbContext bemDbContext) : ICreditAgreementRepository
     {
         public IUnitOfWork UnitOfWork => bemDbContext;
 
@@ -16,4 +16,12 @@ namespace BemConsignado.HttpService.Domain.CreditAgreements
             return await bemDbContext.CreditAgreements.FirstOrDefaultAsync(x => x.State == state && x.MaxLoanAmount >= loanAmount);
         }
     }
+
+    public interface ICreditAgreementRepository
+    {
+        IUnitOfWork UnitOfWork { get; }
+        Task AddAsync(CreditAgreement creditAgreement);
+        Task<CreditAgreement> GetAsync(string state, decimal loanAmount);
+    }
+
 }

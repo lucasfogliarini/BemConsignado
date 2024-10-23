@@ -2,7 +2,7 @@
 
 namespace BemConsignado.HttpService.Domain.Proponents.Handlers
 {
-    public class CreateProponentHandler(ProponentRepository proponentRepository) : IRequestHandler<CreateProponentCommand, Proponent>
+    public class CreateProponentHandler(IProponentRepository proponentRepository) : IRequestHandler<CreateProponentCommand, Proponent>
     {
         public async Task<Proponent> Handle(CreateProponentCommand request, CancellationToken cancellationToken)
         {

@@ -1,9 +1,8 @@
-﻿using BemConsignado.HttpService.Domain.CreditProposals.Validations;
-using BemConsignado.HttpService.Infrastructure;
+﻿using BemConsignado.HttpService.Infrastructure;
 
 namespace BemConsignado.HttpService.Domain.CreditProposals
 {
-    public class CreditProposalRepository(BemDbContext bemDbContext)
+    public class CreditProposalRepository(BemDbContext bemDbContext) : ICreditProposalRepository
     {
         public IUnitOfWork UnitOfWork => bemDbContext;
 
@@ -11,15 +10,11 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
         {
             await bemDbContext.CreditProposals.AddAsync(creditProposal);
         }
-
-        public IValidation[] GetValidations()
-        {
-            return
-            [
-                new HasProposalOpenValidation(),
-                new MaxPaymentDateValidation(),
-                new ProponentIsActiveValidation()
-            ];
-        }
     }
+    public interface ICreditProposalRepository
+    {
+        IUnitOfWork UnitOfWork { get; }
+        Task AddAsync(CreditProposal creditProposal);
+    }
+
 }

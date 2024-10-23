@@ -12,11 +12,11 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddDbContext<BemDbContext>(opt => opt.UseInMemoryDatabase(nameof(BemDbContext)));
             services
-                .AddScoped<CreditProposalRepository>()
-                .AddScoped<CreditAgreementRepository>()
-                .AddScoped<ProponentRepository>();
+                .AddScoped<ICreditProposalRepository, CreditProposalRepository>()
+                .AddScoped<ICreditAgreementRepository, CreditAgreementRepository>()
+                .AddScoped<IProponentRepository, ProponentRepository>();
 
-            services.AddScoped<CpfCheckerClient>();
+            services.AddScoped<ICpfCheckerClient, CpfCheckerClient>();
         }
     }
 }

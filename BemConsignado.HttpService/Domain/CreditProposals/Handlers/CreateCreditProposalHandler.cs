@@ -6,10 +6,10 @@ using BemConsignado.HttpService.Infrastructure;
 
 namespace BemConsignado.HttpService.Domain.CreditProposals
 {
-    public class CreateCreditProposalHandler(ProponentRepository proponentRepository,
-                                            CreditAgreementRepository creditAgreementRepository,
-                                            CreditProposalRepository creditProposalRepository,
-                                            CpfCheckerClient cpfCheckerClient) :
+    public class CreateCreditProposalHandler(IProponentRepository proponentRepository,
+                                            ICreditAgreementRepository creditAgreementRepository,
+                                            ICreditProposalRepository creditProposalRepository,
+                                            ICpfCheckerClient cpfCheckerClient) :
                                             IRequestHandler<CreateCreditProposalCommand, Result<CreditProposal>>
     {
         public async Task<Result<CreditProposal>> Handle(CreateCreditProposalCommand request, CancellationToken cancellationToken)
@@ -22,8 +22,7 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
             if (creditAgreement == null)
                 return Result.Failure<CreditProposal>($"Não há convênios disponíveis que tenha esse limite de crédito '{request.Credit}' no estado '{proponent.State}'.");
 
-            var validations = creditProposalRepository.GetValidations();
-            var creditProposal = CreditProposal.Create(proponent, creditAgreement, request.Credit, request.Installments, validations);
+            var creditProposal = CreditProposal.Create(proponent, creditAgreement, request.Credit, request.Installments);
             if (creditProposal.IsFailure)
                 return creditProposal;
 

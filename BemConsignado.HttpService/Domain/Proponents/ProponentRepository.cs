@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BemConsignado.HttpService.Domain.Proponents
 {
-    public class ProponentRepository(BemDbContext bemDbContext)
+    public class ProponentRepository(BemDbContext bemDbContext) : IProponentRepository
     {
         public IUnitOfWork UnitOfWork => bemDbContext;
 
@@ -17,4 +17,12 @@ namespace BemConsignado.HttpService.Domain.Proponents
             return await bemDbContext.Proponents.Include(e=>e.Proposals).FirstOrDefaultAsync(x => x.Cpf == cpf);
         }
     }
+
+    public interface IProponentRepository
+    {
+        IUnitOfWork UnitOfWork { get; }
+        Task AddAsync(Proponent proponent);
+        Task<Proponent> GetAsync(string cpf);
+    }
+
 }

@@ -8,14 +8,16 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
     public class CreditProposal
     {
         public int Id { get; set; }
-        public CreditProposalStatus Status { get; private set; }
+        public CreditProposalStatus Status { get; set; }
         public Proponent Proponent { get; private set; }
         public CreditAgreement Agreement { get; private set; }
         public int Installments { get; private set; }
         public decimal Credit { get; private set; }
 
-        public static Result<CreditProposal> Create(Proponent proponent, CreditAgreement creditAgreement, decimal credit, int installments, IValidation[] validations)
+        public static Result<CreditProposal> Create(Proponent proponent, CreditAgreement creditAgreement, decimal credit, int installments)
         {
+            var validations = GetValidations();
+
             foreach (var validation in validations)
             {
                 var result = validation.Validate(proponent, installments);
@@ -31,6 +33,16 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
                 Installments = installments,
                 Credit = credit
             };
+        }
+
+        public static IValidation[] GetValidations()
+        {
+            return
+            [
+                new HasProposalOpenValidation(),
+                new MaxPaymentDateValidation(),
+                new ProponentIsActiveValidation()
+            ];
         }
     }
 
