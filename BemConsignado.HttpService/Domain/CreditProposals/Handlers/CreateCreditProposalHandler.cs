@@ -2,19 +2,21 @@
 using BemConsignado.HttpService.Domain.Proponents;
 using MediatR;
 using BemConsignado.HttpService.Domain.CreditAgreements;
+using BemConsignado.HttpService.Infrastructure;
 
 namespace BemConsignado.HttpService.Domain.CreditProposals
 {
     public class CreateCreditProposalHandler(ProponentRepository proponentRepository,
                                             CreditAgreementRepository creditAgreementRepository,
-                                            CreditProposalRepository creditProposalRepository) :
+                                            CreditProposalRepository creditProposalRepository,
+                                            CpfCheckerClient cpfCheckerClient) :
                                             IRequestHandler<CreateCreditProposalCommand, Result<CreditProposal>>
     {
         public async Task<Result<CreditProposal>> Handle(CreateCreditProposalCommand request, CancellationToken cancellationToken)
         {
             var proponent = await proponentRepository.GetAsync(request.Cpf);
             if(proponent == null)
-                return Result.Failure<CreditProposal>($"Proponente não foi encontrado com esse cpf: '{request.Cpf}'");
+                return Result.Failure<CreditProposal>($"Proponente não foi encontrado com esse CPF: '{request.Cpf}'");
 
             var creditAgreement = await creditAgreementRepository.GetAsync(proponent.State, request.Credit);
             if (creditAgreement == null)
@@ -24,7 +26,9 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
             if (creditProposal.IsFailure)
                 return creditProposal;
 
-            //verificar cpf válido
+            var cpfActive = cpfCheckerClient.IsActive(proponent.Cpf);
+            if (!cpfActive)
+                return Result.Failure<CreditProposal>($"O CPF informado está bloqueado '{proponent.Cpf}'");
 
             await creditProposalRepository.AddAsync(creditProposal.Value);
             await creditProposalRepository.UnitOfWork.SaveChangesAsync();

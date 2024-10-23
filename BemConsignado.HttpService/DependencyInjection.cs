@@ -15,6 +15,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddScoped<CreditProposalRepository>()
                 .AddScoped<CreditAgreementRepository>()
                 .AddScoped<ProponentRepository>();
+
+            services.AddScoped<CpfCheckerClient>();
         }
     }
 }
