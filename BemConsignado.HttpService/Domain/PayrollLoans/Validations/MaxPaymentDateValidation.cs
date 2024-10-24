@@ -2,7 +2,7 @@
 using BemConsignado.HttpService.Domain.Proponents;
 using CSharpFunctionalExtensions;
 
-namespace BemConsignado.HttpService.Domain.CreditProposals.Validations
+namespace BemConsignado.HttpService.Domain.PayrollLoans.Validations
 {
     public class MaxPaymentDateValidation : IValidation
     {
@@ -12,7 +12,7 @@ namespace BemConsignado.HttpService.Domain.CreditProposals.Validations
             DateTime maxPaymentDate = proponent.BirthDate.AddYears(maxPaymentYear);
             DateTime lastInstallmentDate = DateTime.Now.AddMonths(installments);
             if (lastInstallmentDate > maxPaymentDate)
-                return Result.Failure<CreditProposal>("A última parcela de pagamento não pode exceder a idade de 80 anos do proponente.");
+                return Result.Failure<PayrollLoan>("A última parcela de pagamento não pode exceder a idade de 80 anos do proponente.");
 
             return Result.Success();
         }

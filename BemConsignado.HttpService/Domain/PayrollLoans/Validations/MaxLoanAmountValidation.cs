@@ -2,14 +2,14 @@
 using BemConsignado.HttpService.Domain.Proponents;
 using CSharpFunctionalExtensions;
 
-namespace BemConsignado.HttpService.Domain.CreditProposals.Validations
+namespace BemConsignado.HttpService.Domain.PayrollLoans.Validations
 {
-    public class ProponentIsActiveValidation : IValidation
+    public class MaxLoanAmountValidation : IValidation
     {
         public Result Validate(Proponent proponent, CreditAgreement creditAgreement, decimal credit, int installments)
         {
-            if (!proponent.IsActive)
-                return Result.Failure<CreditProposal>("Proponente deve estar ativo.");
+            if (credit > creditAgreement.MaxLoanAmount)
+                return Result.Failure<PayrollLoan>("O convênio selecionado não é elegível para o valor de crédito solicitado.");
             return Result.Success();
         }
     }

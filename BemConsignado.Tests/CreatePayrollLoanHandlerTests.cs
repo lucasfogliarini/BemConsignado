@@ -1,5 +1,5 @@
 using BemConsignado.HttpService.Domain.CreditAgreements;
-using BemConsignado.HttpService.Domain.CreditProposals;
+using BemConsignado.HttpService.Domain.PayrollLoans;
 using BemConsignado.HttpService.Domain.Proponents;
 using BemConsignado.HttpService.Infrastructure;
 using NSubstitute;
@@ -7,10 +7,10 @@ using NSubstitute.ReturnsExtensions;
 
 namespace BemConsignado.Tests
 {
-    public class CreateCreditProposalHandlerTests
+    public class CreatePayrollLoanHandlerTests
     {
         readonly IProponentRepository proponentRepository = Substitute.For<IProponentRepository>();
-        readonly ICreditProposalRepository creditProposalRepository = Substitute.For<ICreditProposalRepository>();
+        readonly IPayrollLoanRepository payrollLoanRepository = Substitute.For<IPayrollLoanRepository>();
         readonly ICreditAgreementRepository creditAgreementRepository = Substitute.For<ICreditAgreementRepository>();
         readonly ICpfCheckerClient cpfCheckerClient = Substitute.For<ICpfCheckerClient>();
 
@@ -21,11 +21,11 @@ namespace BemConsignado.Tests
             proponentRepository.GetAsync(Arg.Any<string>()).ReturnsNull();
 
             // Act
-            var creditProposal = await CreateCreditProposalHandler().Handle(new CreateCreditProposalCommand(), CancellationToken.None);
+            var payrollLoan = await CreatePayrollLoanHandler().Handle(new CreatePayrollLoanCommand(), CancellationToken.None);
 
             // Assert
-            Assert.True(creditProposal.IsFailure);
-            Assert.Contains("Proponente não foi encontrado com esse CPF: ", creditProposal.Error);
+            Assert.True(payrollLoan.IsFailure);
+            Assert.Contains("Proponente não foi encontrado com esse CPF: ", payrollLoan.Error);
         }
 
         [Fact]
@@ -36,11 +36,11 @@ namespace BemConsignado.Tests
             creditAgreementRepository.GetAsync(Arg.Any<string>()).ReturnsNull();
 
             // Act
-            var creditProposal = await CreateCreditProposalHandler().Handle(new CreateCreditProposalCommand(), CancellationToken.None);
+            var payrollLoan = await CreatePayrollLoanHandler().Handle(new CreatePayrollLoanCommand(), CancellationToken.None);
 
             // Assert
-            Assert.True(creditProposal.IsFailure);
-            Assert.Contains("Não foi encontrado convênio com esse código ", creditProposal.Error);
+            Assert.True(payrollLoan.IsFailure);
+            Assert.Contains("Não foi encontrado convênio com esse código ", payrollLoan.Error);
         }
 
         [Fact]
@@ -52,16 +52,16 @@ namespace BemConsignado.Tests
             cpfCheckerClient.IsActive(Arg.Any<string>()).Returns(false);
 
             // Act
-            var creditProposal = await CreateCreditProposalHandler().Handle(new CreateCreditProposalCommand(), CancellationToken.None);
+            var payrollLoan = await CreatePayrollLoanHandler().Handle(new CreatePayrollLoanCommand(), CancellationToken.None);
 
             // Assert
-            Assert.True(creditProposal.IsFailure);
-            Assert.Contains("O CPF informado está bloqueado ", creditProposal.Error);
+            Assert.True(payrollLoan.IsFailure);
+            Assert.Contains("O CPF informado está bloqueado ", payrollLoan.Error);
         }
 
-        CreateCreditProposalHandler CreateCreditProposalHandler()
+        CreatePayrollLoanHandler CreatePayrollLoanHandler()
         {
-            return new CreateCreditProposalHandler(proponentRepository, creditAgreementRepository, creditProposalRepository, cpfCheckerClient);
+            return new CreatePayrollLoanHandler(proponentRepository, creditAgreementRepository, payrollLoanRepository, cpfCheckerClient);
         }
 
         Proponent CreateProponent()
@@ -77,7 +77,7 @@ namespace BemConsignado.Tests
                 Income = 50000,
                 IsActive = true,
                 BirthDate = DateTime.Now.AddYears(-35),
-                Proposals = []
+                PayrollLoans = []
             };
         }
 

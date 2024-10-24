@@ -14,7 +14,7 @@ namespace BemConsignado.HttpService.Domain.Proponents
 
         public async Task<Proponent> GetAsync(string cpf)
         {
-            return await bemDbContext.Proponents.Include(e=>e.Proposals).FirstOrDefaultAsync(x => x.Cpf == cpf);
+            return await bemDbContext.Proponents.Include(e=>e.PayrollLoans).FirstOrDefaultAsync(x => x.Cpf == cpf);
         }
     }
 

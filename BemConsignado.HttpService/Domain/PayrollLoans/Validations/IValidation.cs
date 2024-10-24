@@ -2,7 +2,7 @@
 using BemConsignado.HttpService.Domain.Proponents;
 using CSharpFunctionalExtensions;
 
-namespace BemConsignado.HttpService.Domain.CreditProposals.Validations
+namespace BemConsignado.HttpService.Domain.PayrollLoans.Validations
 {
     public interface IValidation
     {

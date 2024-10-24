@@ -19,7 +19,7 @@ public class ProponentEntityConfiguration : IEntityTypeConfiguration<Proponent>
         builder.Property(e => e.Income).IsRequired();
 
         builder
-            .HasMany(p => p.Proposals)
+            .HasMany(p => p.PayrollLoans)
             .WithOne(b=>b.Proponent)
             .IsRequired();
     }

@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BemConsignado.HttpService.Domain.PayrollLoans;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using BemConsignado.HttpService.Domain.CreditProposals;
 
 namespace BemConsignado.HttpService.Infrastructure.EntityConfigurations;
 
-public class CreditProposalEntityConfiguration : IEntityTypeConfiguration<CreditProposal>
+public class PayrollLoanEntityConfiguration : IEntityTypeConfiguration<PayrollLoan>
 {
-    public void Configure(EntityTypeBuilder<CreditProposal> builder)
+    public void Configure(EntityTypeBuilder<PayrollLoan> builder)
     {
         builder.HasKey(o => o.Id);
         builder.Property(e=>e.Status).IsRequired();
@@ -14,7 +14,7 @@ public class CreditProposalEntityConfiguration : IEntityTypeConfiguration<Credit
         builder.Property(e => e.Installments).IsRequired();
         builder
             .HasOne(p => p.Proponent)
-            .WithMany(b=>b.Proposals)
+            .WithMany(b=>b.PayrollLoans)
             .IsRequired();
 
         builder

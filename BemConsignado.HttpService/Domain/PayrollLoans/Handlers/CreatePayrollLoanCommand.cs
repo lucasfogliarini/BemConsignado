@@ -1,9 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using MediatR;
 
-namespace BemConsignado.HttpService.Domain.CreditProposals
+namespace BemConsignado.HttpService.Domain.PayrollLoans
 {
-    public class CreateCreditProposalCommand : IRequest<Result<CreditProposal>>
+    public class CreatePayrollLoanCommand : IRequest<Result<PayrollLoan>>
     {
         public string Cpf { get; set; }
         public string CreditAgreementCode { get; set; }

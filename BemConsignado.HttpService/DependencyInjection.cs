@@ -1,5 +1,5 @@
 ﻿using BemConsignado.HttpService.Domain.CreditAgreements;
-using BemConsignado.HttpService.Domain.CreditProposals;
+using BemConsignado.HttpService.Domain.PayrollLoans;
 using BemConsignado.HttpService.Domain.Proponents;
 using BemConsignado.HttpService.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddDbContext<BemDbContext>(opt => opt.UseInMemoryDatabase(nameof(BemDbContext)));
             services
-                .AddScoped<ICreditProposalRepository, CreditProposalRepository>()
+                .AddScoped<IPayrollLoanRepository, PayrollLoanRepository>()
                 .AddScoped<ICreditAgreementRepository, CreditAgreementRepository>()
                 .AddScoped<IProponentRepository, ProponentRepository>();
 

@@ -1,4 +1,4 @@
-using BemConsignado.HttpService.Domain.CreditProposals.Handlers.Dtos;
+using BemConsignado.HttpService.Domain.PayrollLoans.Handlers.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,12 +6,12 @@ namespace BemConsignado.HttpService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CreditProposalsController(IMediator mediator) : ControllerBase
+    public class PayrollLoansController(IMediator mediator) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCreditProposalInput creditProposalInput)
+        public async Task<IActionResult> Create(CreatePayrollLoanInput createPayrollLoanInput)
         {
-            var result = await mediator.Send(creditProposalInput.CreateCommand());
+            var result = await mediator.Send(createPayrollLoanInput.CreateCommand());
             if (result.IsFailure)
                 return BadRequest(result.Error);
 

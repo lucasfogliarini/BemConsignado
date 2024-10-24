@@ -1,17 +1,17 @@
 using BemConsignado.HttpService.Domain.CreditAgreements;
-using BemConsignado.HttpService.Domain.CreditProposals;
+using BemConsignado.HttpService.Domain.PayrollLoans;
 using BemConsignado.HttpService.Domain.Proponents;
 
 namespace BemConsignado.Tests
 {
-    public class CreditProposalTests
+    public class PayrollLoanTests
     {
         [Theory]
-        [InlineData(true, CreditProposalStatus.Closed, 50000, 50000, 12.1)]
-        [InlineData(true, CreditProposalStatus.Open, 50000, 50000, 6)]
-        [InlineData(false, CreditProposalStatus.Closed, 50000, 50000, 6)]
-        [InlineData(true, CreditProposalStatus.Closed, 55000, 50000, 6)]
-        public void CreateProposal_Should_Fail_When(bool proponentActive, CreditProposalStatus creditProposalStatus, decimal credit, decimal maxLoanAmount, int installments)
+        [InlineData(true, PayrollLoanStatus.Closed, 50000, 50000, 12.1)]
+        [InlineData(true, PayrollLoanStatus.Open, 50000, 50000, 6)]
+        [InlineData(false, PayrollLoanStatus.Closed, 50000, 50000, 6)]
+        [InlineData(true, PayrollLoanStatus.Closed, 55000, 50000, 6)]
+        public void CreatePayrollLoan_Should_Fail_When(bool proponentActive, PayrollLoanStatus payrollLoanStatus, decimal credit, decimal maxLoanAmount, int installments)
         {
             // Arrange
             var proponent = new Proponent
@@ -23,11 +23,11 @@ namespace BemConsignado.Tests
                 State = "RS",
                 BirthDate = DateTime.Now.AddYears(-79),
                 IsActive = proponentActive,
-                Proposals =
+                PayrollLoans =
                 [
-                    new CreditProposal
+                    new PayrollLoan
                     {
-                        Status = creditProposalStatus
+                        Status = payrollLoanStatus
                     }
                 ]
             };
@@ -39,14 +39,14 @@ namespace BemConsignado.Tests
             };
 
             // Act
-            var creditProposal = CreditProposal.Create(proponent, creditAgreement, credit, installments);
+            var payrollLoan = PayrollLoan.Create(proponent, creditAgreement, credit, installments);
 
             // Assert
-            Assert.True(creditProposal.IsFailure);
+            Assert.True(payrollLoan.IsFailure);
         }
 
         [Fact]
-        public void CreateProposal_Should_Sucess_When()
+        public void CreatePayrollLoan_Should_Sucess_When()
         {
             // Arrange
             var proponent = new Proponent
@@ -58,11 +58,11 @@ namespace BemConsignado.Tests
                 State = "RS",
                 BirthDate = DateTime.Now.AddYears(-79),
                 IsActive = true,
-                Proposals =
+                PayrollLoans =
                 [
-                    new CreditProposal
+                    new PayrollLoan
                     {
-                        Status = CreditProposalStatus.Closed
+                        Status = PayrollLoanStatus.Closed
                     }
                 ]
             };
@@ -76,10 +76,10 @@ namespace BemConsignado.Tests
             int installments = 11;
 
             // Act
-            var creditProposal = CreditProposal.Create(proponent, creditAgreement, credit, installments);
+            var payrollLoan = PayrollLoan.Create(proponent, creditAgreement, credit, installments);
 
             // Assert
-            Assert.True(creditProposal.IsSuccess);
+            Assert.True(payrollLoan.IsSuccess);
         }
     }
 }

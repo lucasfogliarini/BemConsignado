@@ -1,4 +1,4 @@
-﻿using BemConsignado.HttpService.Domain.CreditProposals;
+﻿using BemConsignado.HttpService.Domain.PayrollLoans;
 
 namespace BemConsignado.HttpService.Domain.Proponents
 {
@@ -14,7 +14,7 @@ namespace BemConsignado.HttpService.Domain.Proponents
         public bool IsActive { get; set; }
         public required string State { get; set; }
         public DateTime BirthDate { get; set; }
-        public List<CreditProposal> Proposals { get; set; }
+        public List<PayrollLoan> PayrollLoans { get; set; }
 
         public static Proponent Create(string cpf, string name, decimal income, string address, string phoneNumber, string email, bool isActive, string state, DateTime birthDate)
         {
