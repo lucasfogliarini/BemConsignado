@@ -12,27 +12,27 @@ namespace BemConsignado.HttpService.Domain.PayrollLoans
                                             ICpfCheckerClient cpfCheckerClient) :
                                             IRequestHandler<CreatePayrollLoanCommand, Result<PayrollLoan>>
     {
-        public async Task<Result<PayrollLoan>> Handle(CreatePayrollLoanCommand proposalCommand, CancellationToken cancellationToken)
+        public async Task<Result<PayrollLoan>> Handle(CreatePayrollLoanCommand payrollLoanCommand, CancellationToken cancellationToken)
         {
-            var proponent = await proponentRepository.GetAsync(proposalCommand.Cpf);
+            var proponent = await proponentRepository.GetAsync(payrollLoanCommand.Cpf);
             if(proponent == null)
-                return Result.Failure<PayrollLoan>($"Proponente não foi encontrado com esse CPF: '{proposalCommand.Cpf}'");
+                return Result.Failure<PayrollLoan>($"Proponente não foi encontrado com esse CPF: '{payrollLoanCommand.Cpf}'");
 
-            var creditAgreement = await creditAgreementRepository.GetAsync(proposalCommand.CreditAgreementCode);
+            var creditAgreement = await creditAgreementRepository.GetAsync(payrollLoanCommand.CreditAgreementCode);
             if (creditAgreement == null)
-                return Result.Failure<PayrollLoan>($"Não foi encontrado convênio com esse código '{proposalCommand.CreditAgreementCode}'.");
+                return Result.Failure<PayrollLoan>($"Não foi encontrado convênio com esse código '{payrollLoanCommand.CreditAgreementCode}'.");
 
-            var creditProposal = PayrollLoan.Create(proponent, creditAgreement, proposalCommand.Credit, proposalCommand.Installments);
-            if (creditProposal.IsFailure)
-                return creditProposal;
+            var payrollLoan = PayrollLoan.Create(proponent, creditAgreement, payrollLoanCommand.Credit, payrollLoanCommand.Installments);
+            if (payrollLoan.IsFailure)
+                return payrollLoan;
 
             var cpfActive = cpfCheckerClient.IsActive(proponent.Cpf);
             if (!cpfActive)
                 return Result.Failure<PayrollLoan>($"O CPF informado está bloqueado '{proponent.Cpf}'");
 
-            await payrollLoanRepository.AddAsync(creditProposal.Value);
+            await payrollLoanRepository.AddAsync(payrollLoan.Value);
             await payrollLoanRepository.UnitOfWork.SaveChangesAsync();
-            return creditProposal.Value;
+            return payrollLoan.Value;
         }
     }
 }

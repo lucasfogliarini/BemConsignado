@@ -6,15 +6,15 @@ namespace BemConsignado.HttpService.Domain.PayrollLoans
     {
         public IUnitOfWork UnitOfWork => bemDbContext;
 
-        public async Task AddAsync(PayrollLoan creditProposal)
+        public async Task AddAsync(PayrollLoan payrollLoan)
         {
-            await bemDbContext.PayrollLoans.AddAsync(creditProposal);
+            await bemDbContext.PayrollLoans.AddAsync(payrollLoan);
         }
     }
     public interface IPayrollLoanRepository
     {
         IUnitOfWork UnitOfWork { get; }
-        Task AddAsync(PayrollLoan creditProposal);
+        Task AddAsync(PayrollLoan payrollLoan);
     }
 
 }
