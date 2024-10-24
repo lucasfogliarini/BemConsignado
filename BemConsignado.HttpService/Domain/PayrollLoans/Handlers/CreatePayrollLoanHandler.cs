@@ -24,7 +24,7 @@ namespace BemConsignado.HttpService.Domain.PayrollLoans
             if (creditAgreement == null)
                 return Result.Failure<PayrollLoan>($"Não foi encontrado convênio com esse código '{payrollLoanCommand.CreditAgreementCode}'.");
 
-            var agent = await agentRepository.GetAsync(payrollLoanCommand.CreditAgreementCode);
+            var agent = await agentRepository.GetAsync(payrollLoanCommand.AgentCpf);
             if (agent == null)
                 return Result.Failure<PayrollLoan>($"Agente não foi encontrado com esse CPF: '{payrollLoanCommand.AgentCpf}'");
 
