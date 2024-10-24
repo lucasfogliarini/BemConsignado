@@ -9,7 +9,7 @@ public class CreditAgreementEntityConfiguration : IEntityTypeConfiguration<Credi
     public void Configure(EntityTypeBuilder<CreditAgreement> builder)
     {
         builder.HasKey(o => o.Id);
-        builder.Property(e=>e.PartnerName).IsRequired();
+        builder.Property(e=>e.Code).IsRequired();
         builder.Property(e => e.State).IsRequired();
         builder.Property(e => e.MaxLoanAmount).IsRequired();
     }

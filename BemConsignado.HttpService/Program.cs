@@ -40,11 +40,17 @@ void Seed()
 {
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<BemDbContext>();
-    context.CreditAgreements.Add(new CreditAgreement()
+    context.CreditAgreements.AddRange(new CreditAgreement()
     {
         MaxLoanAmount = 50000,
-        PartnerName = "Partner1",
+        Code = "INSS",
         State = "RS"
+    },
+    new CreditAgreement()
+    {
+        MaxLoanAmount = 30000,
+        Code = "SIAPE",
+        State = "SP"
     });
     context.SaveChanges();
 }

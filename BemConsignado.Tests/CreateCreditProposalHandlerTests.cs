@@ -33,14 +33,14 @@ namespace BemConsignado.Tests
         {
             // Arrange            
             proponentRepository.GetAsync(Arg.Any<string>()).Returns(CreateProponent());
-            creditAgreementRepository.GetAsync(Arg.Any<string>(), Arg.Any<decimal>()).ReturnsNull();
+            creditAgreementRepository.GetAsync(Arg.Any<string>()).ReturnsNull();
 
             // Act
             var creditProposal = await CreateCreditProposalHandler().Handle(new CreateCreditProposalCommand(), CancellationToken.None);
 
             // Assert
             Assert.True(creditProposal.IsFailure);
-            Assert.Contains("Não há convênios disponíveis que tenha esse limite de crédito ", creditProposal.Error);
+            Assert.Contains("Não foi encontrado convênio com esse código ", creditProposal.Error);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace BemConsignado.Tests
         {
             // Arrange            
             proponentRepository.GetAsync(Arg.Any<string>()).Returns(CreateProponent());
-            creditAgreementRepository.GetAsync(Arg.Any<string>(), Arg.Any<decimal>()).Returns(CreateCreditAgreement());
+            creditAgreementRepository.GetAsync(Arg.Any<string>()).Returns(CreateCreditAgreement());
             cpfCheckerClient.IsActive(Arg.Any<string>()).Returns(false);
 
             // Act
@@ -86,7 +86,7 @@ namespace BemConsignado.Tests
             return new CreditAgreement()
             {
                 MaxLoanAmount = 5000,
-                PartnerName= "Partner1",
+                Code= "Partner1",
                 State = "RS"
             };
         }

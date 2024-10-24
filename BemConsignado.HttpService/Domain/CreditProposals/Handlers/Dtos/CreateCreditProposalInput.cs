@@ -3,6 +3,7 @@
     public class CreateCreditProposalInput
     {
         public required string Cpf { get; set; }
+        public required string CreditAgreementCode { get; set; }
         public required int Installments { get; set; }
         public required decimal Credit { get; set; }
 
@@ -11,6 +12,7 @@
             return new CreateCreditProposalCommand
             {
                 Cpf = Cpf,
+                CreditAgreementCode = CreditAgreementCode,
                 Installments = Installments,
                 Credit = Credit
             };

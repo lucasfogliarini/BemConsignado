@@ -11,9 +11,9 @@ namespace BemConsignado.HttpService.Domain.CreditAgreements
         {
             await bemDbContext.CreditAgreements.AddAsync(creditAgreement);
         }
-        public async Task<CreditAgreement> GetAsync(string state, decimal loanAmount)
+        public async Task<CreditAgreement> GetAsync(string code)
         {
-            return await bemDbContext.CreditAgreements.FirstOrDefaultAsync(x => x.State == state && x.MaxLoanAmount >= loanAmount);
+            return await bemDbContext.CreditAgreements.FirstOrDefaultAsync(x => x.Code == code);
         }
     }
 
@@ -21,7 +21,6 @@ namespace BemConsignado.HttpService.Domain.CreditAgreements
     {
         IUnitOfWork UnitOfWork { get; }
         Task AddAsync(CreditAgreement creditAgreement);
-        Task<CreditAgreement> GetAsync(string state, decimal loanAmount);
+        Task<CreditAgreement> GetAsync(string code);
     }
-
 }

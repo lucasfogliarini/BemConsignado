@@ -20,7 +20,7 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
 
             foreach (var validation in validations)
             {
-                var result = validation.Validate(proponent, installments);
+                var result = validation.Validate(proponent, creditAgreement, credit, installments);
                 if (result.IsFailure)
                     return Result.Failure<CreditProposal>(result.Error);
             }
@@ -41,7 +41,8 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
             [
                 new HasProposalOpenValidation(),
                 new MaxPaymentDateValidation(),
-                new ProponentIsActiveValidation()
+                new ProponentIsActiveValidation(),
+                new MaxLoanAmountValidation()
             ];
         }
     }

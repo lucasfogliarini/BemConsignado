@@ -7,10 +7,11 @@ namespace BemConsignado.Tests
     public class CreditProposalTests
     {
         [Theory]
-        [InlineData(true, CreditProposalStatus.Closed, 12.1)]
-        [InlineData(true, CreditProposalStatus.Open, 6)]
-        [InlineData(false, CreditProposalStatus.Closed, 6)]
-        public void CreateProposal_Should_Fail_When(bool proponentActive, CreditProposalStatus creditProposalStatus, int installments)
+        [InlineData(true, CreditProposalStatus.Closed, 50000, 50000, 12.1)]
+        [InlineData(true, CreditProposalStatus.Open, 50000, 50000, 6)]
+        [InlineData(false, CreditProposalStatus.Closed, 50000, 50000, 6)]
+        [InlineData(true, CreditProposalStatus.Closed, 55000, 50000, 6)]
+        public void CreateProposal_Should_Fail_When(bool proponentActive, CreditProposalStatus creditProposalStatus, decimal credit, decimal maxLoanAmount, int installments)
         {
             // Arrange
             var proponent = new Proponent
@@ -32,11 +33,10 @@ namespace BemConsignado.Tests
             };
             var creditAgreement = new CreditAgreement
             {
-                MaxLoanAmount = 5000,
+                MaxLoanAmount = maxLoanAmount,
                 State = "RS",
-                PartnerName = "Partner1"
+                Code = "Partner1"
             };
-            decimal credit = 5000;
 
             // Act
             var creditProposal = CreditProposal.Create(proponent, creditAgreement, credit, installments);
@@ -70,7 +70,7 @@ namespace BemConsignado.Tests
             {
                 MaxLoanAmount = 5000,
                 State = "RS",
-                PartnerName = "Partner1"
+                Code = "Partner1"
             };
             decimal credit = 5000;
             int installments = 11;

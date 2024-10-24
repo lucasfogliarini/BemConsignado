@@ -12,17 +12,17 @@ namespace BemConsignado.HttpService.Domain.CreditProposals
                                             ICpfCheckerClient cpfCheckerClient) :
                                             IRequestHandler<CreateCreditProposalCommand, Result<CreditProposal>>
     {
-        public async Task<Result<CreditProposal>> Handle(CreateCreditProposalCommand request, CancellationToken cancellationToken)
+        public async Task<Result<CreditProposal>> Handle(CreateCreditProposalCommand proposalCommand, CancellationToken cancellationToken)
         {
-            var proponent = await proponentRepository.GetAsync(request.Cpf);
+            var proponent = await proponentRepository.GetAsync(proposalCommand.Cpf);
             if(proponent == null)
-                return Result.Failure<CreditProposal>($"Proponente não foi encontrado com esse CPF: '{request.Cpf}'");
+                return Result.Failure<CreditProposal>($"Proponente não foi encontrado com esse CPF: '{proposalCommand.Cpf}'");
 
-            var creditAgreement = await creditAgreementRepository.GetAsync(proponent.State, request.Credit);
+            var creditAgreement = await creditAgreementRepository.GetAsync(proposalCommand.CreditAgreementCode);
             if (creditAgreement == null)
-                return Result.Failure<CreditProposal>($"Não há convênios disponíveis que tenha esse limite de crédito '{request.Credit}' no estado '{proponent.State}'.");
+                return Result.Failure<CreditProposal>($"Não foi encontrado convênio com esse código '{proposalCommand.CreditAgreementCode}'.");
 
-            var creditProposal = CreditProposal.Create(proponent, creditAgreement, request.Credit, request.Installments);
+            var creditProposal = CreditProposal.Create(proponent, creditAgreement, proposalCommand.Credit, proposalCommand.Installments);
             if (creditProposal.IsFailure)
                 return creditProposal;
 

@@ -1,11 +1,12 @@
-﻿using BemConsignado.HttpService.Domain.Proponents;
+﻿using BemConsignado.HttpService.Domain.CreditAgreements;
+using BemConsignado.HttpService.Domain.Proponents;
 using CSharpFunctionalExtensions;
 
 namespace BemConsignado.HttpService.Domain.CreditProposals.Validations
 {
     public class HasProposalOpenValidation : IValidation
     {
-        public Result Validate(Proponent proponent, int installments)
+        public Result Validate(Proponent proponent, CreditAgreement creditAgreement, decimal credit, int installments)
         {
             var hasOpenProposal = proponent.Proposals.Any(p => p.Status == CreditProposalStatus.Open);
             if (hasOpenProposal)
