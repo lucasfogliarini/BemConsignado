@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BemConsignado.HttpService.Domain.Proponents.Handlers;
 
-namespace BemConsignado.HttpService.Domain.Proponents.Handlers.Dtos
+namespace BemConsignado.HttpService.Domain.Proponents.Dtos
 {
     public class ProponentInput
     {

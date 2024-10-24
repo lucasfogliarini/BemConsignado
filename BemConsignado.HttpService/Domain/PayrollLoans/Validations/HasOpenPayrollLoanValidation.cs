@@ -1,14 +1,13 @@
-﻿using BemConsignado.HttpService.Domain.CreditAgreements;
-using BemConsignado.HttpService.Domain.Proponents;
+﻿using BemConsignado.HttpService.Domain.PayrollLoans.Dtos;
 using CSharpFunctionalExtensions;
 
 namespace BemConsignado.HttpService.Domain.PayrollLoans.Validations
 {
     public class HasOpenPayrollLoanValidation : IValidation
     {
-        public Result Validate(Proponent proponent, CreditAgreement creditAgreement, decimal credit, int installments)
+        public Result Validate(PayrollLoanInput payrollLoanInput)
         {
-            var hasOpenPayrollLoan = proponent.PayrollLoans.Any(p => p.Status == PayrollLoanStatus.Open);
+            var hasOpenPayrollLoan = payrollLoanInput.Proponent.PayrollLoans.Any(p => p.Status == PayrollLoanStatus.Open);
             if (hasOpenPayrollLoan)
                 return Result.Failure<PayrollLoan>("Proponente já contém uma proposta de crédito consignado aberta.");
             return Result.Success();

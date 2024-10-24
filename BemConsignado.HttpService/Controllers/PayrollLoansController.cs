@@ -1,4 +1,4 @@
-using BemConsignado.HttpService.Domain.PayrollLoans.Handlers.Dtos;
+using BemConsignado.HttpService.Domain.PayrollLoans.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

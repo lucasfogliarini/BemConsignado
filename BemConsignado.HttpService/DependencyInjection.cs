@@ -14,6 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services
                 .AddScoped<IPayrollLoanRepository, PayrollLoanRepository>()
                 .AddScoped<ICreditAgreementRepository, CreditAgreementRepository>()
+                .AddScoped<IAgentRepository, AgentRepository>()
                 .AddScoped<IProponentRepository, ProponentRepository>();
 
             services.AddScoped<ICpfCheckerClient, CpfCheckerClient>();

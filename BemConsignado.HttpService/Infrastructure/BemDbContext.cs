@@ -11,6 +11,7 @@ public class BemDbContext(DbContextOptions options) : DbContext(options), IUnitO
     public DbSet<Proponent> Proponents { get; set; }
     public DbSet<PayrollLoan> PayrollLoans { get; set; }
     public DbSet<CreditAgreement> CreditAgreements { get; set; }
+    public DbSet<Agent> Agents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

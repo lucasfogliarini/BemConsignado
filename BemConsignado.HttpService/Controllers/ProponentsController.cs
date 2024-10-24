@@ -1,4 +1,4 @@
-using BemConsignado.HttpService.Domain.Proponents.Handlers.Dtos;
+using BemConsignado.HttpService.Domain.Proponents.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

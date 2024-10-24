@@ -52,5 +52,18 @@ void Seed()
         Code = "SIAPE",
         State = "SP"
     });
+
+    context.Agents.AddRange(new Agent
+    {
+        Name = "AgentActive",
+        Cpf = "1",
+        IsActive = true,
+    },
+    new Agent
+    {
+        Name = "AgentInactive",
+        Cpf = "2",
+        IsActive = false,
+    });
     context.SaveChanges();
 }

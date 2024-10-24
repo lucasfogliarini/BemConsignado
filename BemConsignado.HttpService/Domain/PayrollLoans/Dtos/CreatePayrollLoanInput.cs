@@ -1,8 +1,9 @@
-﻿namespace BemConsignado.HttpService.Domain.PayrollLoans.Handlers.Dtos
+﻿namespace BemConsignado.HttpService.Domain.PayrollLoans.Dtos
 {
     public class CreatePayrollLoanInput
     {
-        public required string Cpf { get; set; }
+        public required string ProponentCpf { get; set; }
+        public required string AgentCpf { get; set; }
         public required string CreditAgreementCode { get; set; }
         public required int Installments { get; set; }
         public required decimal Credit { get; set; }
@@ -11,7 +12,8 @@
         {
             return new CreatePayrollLoanCommand
             {
-                Cpf = Cpf,
+                ProponentCpf = ProponentCpf,
+                AgentCpf = AgentCpf,
                 CreditAgreementCode = CreditAgreementCode,
                 Installments = Installments,
                 Credit = Credit

@@ -11,7 +11,6 @@ namespace BemConsignado.HttpService.Domain.Proponents
         public required string Address { get; set; }
         public required string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public bool IsActive { get; set; }
         public required string State { get; set; }
         public DateTime BirthDate { get; set; }
         public List<PayrollLoan> PayrollLoans { get; set; }
@@ -25,7 +24,6 @@ namespace BemConsignado.HttpService.Domain.Proponents
                 Email = email,
                 Address = address,
                 Income = income,
-                IsActive = isActive,
                 PhoneNumber = phoneNumber,
                 State = state,
                 BirthDate = birthDate

@@ -11,6 +11,7 @@ namespace BemConsignado.Tests
     {
         readonly IProponentRepository proponentRepository = Substitute.For<IProponentRepository>();
         readonly IPayrollLoanRepository payrollLoanRepository = Substitute.For<IPayrollLoanRepository>();
+        readonly IAgentRepository agentRepository = Substitute.For<IAgentRepository>();
         readonly ICreditAgreementRepository creditAgreementRepository = Substitute.For<ICreditAgreementRepository>();
         readonly ICpfCheckerClient cpfCheckerClient = Substitute.For<ICpfCheckerClient>();
 
@@ -47,6 +48,7 @@ namespace BemConsignado.Tests
         public async Task Handle_Should_Fail_When_Cpf_IsInactive()
         {
             // Arrange            
+            agentRepository.GetAsync(Arg.Any<string>()).Returns(new Agent() { IsActive = true });
             proponentRepository.GetAsync(Arg.Any<string>()).Returns(CreateProponent());
             creditAgreementRepository.GetAsync(Arg.Any<string>()).Returns(CreateCreditAgreement());
             cpfCheckerClient.IsActive(Arg.Any<string>()).Returns(false);
@@ -56,12 +58,12 @@ namespace BemConsignado.Tests
 
             // Assert
             Assert.True(payrollLoan.IsFailure);
-            Assert.Contains("O CPF informado está bloqueado ", payrollLoan.Error);
+            Assert.Contains("O CPF do proponente informado está bloqueado ", payrollLoan.Error);
         }
 
         CreatePayrollLoanHandler CreatePayrollLoanHandler()
         {
-            return new CreatePayrollLoanHandler(proponentRepository, creditAgreementRepository, payrollLoanRepository, cpfCheckerClient);
+            return new CreatePayrollLoanHandler(proponentRepository, creditAgreementRepository, agentRepository, payrollLoanRepository, cpfCheckerClient);
         }
 
         Proponent CreateProponent()
@@ -75,7 +77,6 @@ namespace BemConsignado.Tests
                 State = "RS",
                 Email = "Email1",
                 Income = 50000,
-                IsActive = true,
                 BirthDate = DateTime.Now.AddYears(-35),
                 PayrollLoans = []
             };
