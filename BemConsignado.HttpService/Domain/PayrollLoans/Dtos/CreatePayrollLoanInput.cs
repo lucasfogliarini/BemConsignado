@@ -7,6 +7,7 @@
         public required string CreditAgreementCode { get; set; }
         public required int Installments { get; set; }
         public required decimal Credit { get; set; }
+        public bool? Refinancing { get; set; }
 
         public CreatePayrollLoanCommand CreateCommand()
         {
@@ -16,7 +17,8 @@
                 AgentCpf = AgentCpf,
                 CreditAgreementCode = CreditAgreementCode,
                 Installments = Installments,
-                Credit = Credit
+                Credit = Credit,
+                Refinancing = Refinancing
             };
         }
     }

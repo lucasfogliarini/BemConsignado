@@ -35,6 +35,7 @@ namespace BemConsignado.HttpService.Domain.PayrollLoans
                 Agent = agent,
                 Installments = payrollLoanCommand.Installments,
                 Credit = payrollLoanCommand.Credit,
+                Refinancing = payrollLoanCommand.Refinancing,
             };
             var payrollLoan = PayrollLoan.Create(payrollLoanInput);
             if (payrollLoan.IsFailure)

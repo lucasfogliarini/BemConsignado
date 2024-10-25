@@ -44,7 +44,8 @@ namespace BemConsignado.HttpService.Domain.PayrollLoans
                 new HasOpenPayrollLoanValidation(),
                 new MaxPaymentDateValidation(),
                 new AgentIsActiveValidation(),
-                new MaxLoanAmountValidation()
+                new MaxLoanAmountValidation(),
+                new AcceptRefinancingValidation()
             ];
         }
     }

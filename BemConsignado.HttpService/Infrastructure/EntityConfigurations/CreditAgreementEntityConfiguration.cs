@@ -12,5 +12,6 @@ public class CreditAgreementEntityConfiguration : IEntityTypeConfiguration<Credi
         builder.Property(e=>e.Code).IsRequired();
         builder.Property(e => e.State).IsRequired();
         builder.Property(e => e.MaxLoanAmount).IsRequired();
+        builder.Property(e => e.AcceptRefinancing).IsRequired();
     }
 }

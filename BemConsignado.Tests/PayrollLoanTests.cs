@@ -8,11 +8,12 @@ namespace BemConsignado.Tests
     public class PayrollLoanTests
     {
         [Theory]
-        [InlineData(true, PayrollLoanStatus.Closed, 50000, 50000, 12.1)]
-        [InlineData(true, PayrollLoanStatus.Open, 50000, 50000, 6)]
-        [InlineData(false, PayrollLoanStatus.Closed, 50000, 50000, 6)]
-        [InlineData(true, PayrollLoanStatus.Closed, 55000, 50000, 6)]
-        public void CreatePayrollLoan_Should_Fail_When(bool agentActive, PayrollLoanStatus payrollLoanStatus, decimal credit, decimal maxLoanAmount, int installments)
+        [InlineData(true, PayrollLoanStatus.Closed, 50000, 50000, false, 12.1)]
+        [InlineData(true, PayrollLoanStatus.Closed, 50000, 50000, true, 6)]
+        [InlineData(true, PayrollLoanStatus.Open, 50000, 50000, false, 6)]
+        [InlineData(false, PayrollLoanStatus.Closed, 50000, 50000, false, 6)]
+        [InlineData(true, PayrollLoanStatus.Closed, 55000, 50000, false, 6)]
+        public void CreatePayrollLoan_Should_Fail_When(bool agentActive, PayrollLoanStatus payrollLoanStatus, decimal credit, decimal maxLoanAmount, bool refinancing, int installments)
         {
             // Arrange
             var payrollLoanInput = new PayrollLoanInput
@@ -37,7 +38,8 @@ namespace BemConsignado.Tests
                 {
                     MaxLoanAmount = maxLoanAmount,
                     State = "RS",
-                    Code = "Partner1"
+                    Code = "Partner1",
+                    AcceptRefinancing = false
                 },
                 Agent = new Agent
                 {
@@ -45,6 +47,7 @@ namespace BemConsignado.Tests
                 },
                 Installments = installments,
                 Credit = credit,
+                Refinancing = refinancing,
             };
 
             // Act

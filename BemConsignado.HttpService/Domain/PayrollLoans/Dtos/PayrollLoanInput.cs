@@ -10,5 +10,6 @@ namespace BemConsignado.HttpService.Domain.PayrollLoans.Dtos
         public required CreditAgreement CreditAgreement { get; set; }
         public required int Installments { get; set; }
         public required decimal Credit { get; set; }
+        public bool? Refinancing { get; set; }
     }
 }

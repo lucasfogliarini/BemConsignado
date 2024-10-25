@@ -44,13 +44,15 @@ void Seed()
     {
         MaxLoanAmount = 50000,
         Code = "INSS",
-        State = "RS"
+        State = "RS",
+        AcceptRefinancing = true,
     },
     new CreditAgreement()
     {
         MaxLoanAmount = 30000,
         Code = "SIAPE",
-        State = "SP"
+        State = "SP",
+        AcceptRefinancing = false,
     });
 
     context.Agents.AddRange(new Agent

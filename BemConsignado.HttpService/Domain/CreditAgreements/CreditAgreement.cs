@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string Code { get; set; }
         public string State { get; set; }
+        public bool AcceptRefinancing { get; set; }
         public decimal MaxLoanAmount { get; set; }
     }
 }
