@@ -1,6 +1,6 @@
 ﻿namespace BemConsignado.HttpService.Domain.PayrollLoans.Dtos
 {
-    public class CreatePayrollLoanInput
+    public record CreatePayrollLoanInput
     {
         public required string ProponentCpf { get; set; }
         public required string AgentCpf { get; set; }

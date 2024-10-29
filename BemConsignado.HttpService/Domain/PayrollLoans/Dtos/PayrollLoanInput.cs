@@ -3,7 +3,7 @@ using BemConsignado.HttpService.Domain.Proponents;
 
 namespace BemConsignado.HttpService.Domain.PayrollLoans.Dtos
 {
-    public class PayrollLoanInput
+    public record PayrollLoanInput
     {
         public required Agent Agent { get; set; }
         public required Proponent Proponent { get; set; }

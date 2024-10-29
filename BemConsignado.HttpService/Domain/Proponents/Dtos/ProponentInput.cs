@@ -3,7 +3,7 @@ using BemConsignado.HttpService.Domain.Proponents.Handlers;
 
 namespace BemConsignado.HttpService.Domain.Proponents.Dtos
 {
-    public class ProponentInput
+    public record ProponentInput
     {
         [Required]
         public required string Cpf { get; set; }

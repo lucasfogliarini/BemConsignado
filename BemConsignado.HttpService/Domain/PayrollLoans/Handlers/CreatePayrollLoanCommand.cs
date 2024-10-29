@@ -3,7 +3,7 @@ using MediatR;
 
 namespace BemConsignado.HttpService.Domain.PayrollLoans
 {
-    public class CreatePayrollLoanCommand : IRequest<Result<PayrollLoan>>
+    public record CreatePayrollLoanCommand : IRequest<Result<PayrollLoan>>
     {
         public string AgentCpf { get; set; }
         public string ProponentCpf { get; set; }
